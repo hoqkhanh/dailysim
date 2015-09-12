@@ -1,0 +1,25 @@
+name = Dai Ly Sim
+description = A simple one-column, tableless, fluid width administration theme.
+package = Core
+version = VERSION
+core = 7.x
+
+regions[header] = Header
+regions[content] = Content
+regions[help] = Help
+regions[left] = Left sidebar
+regions[right] = Right sidebar
+regions[footer] = Footer
+
+; STYLESHEETS
+;----------------------------------------------------
+stylesheets[all][] = css/style.css
+
+;SCRIPTS
+;----------------------------------------------------
+
+scripts[] = js/modernizr.js
+;scripts[] = js/main.js
+
+
+
