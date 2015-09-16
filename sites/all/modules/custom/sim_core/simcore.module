@@ -1,0 +1,37 @@
+<?php
+
+function simcore_block_info() {
+    $blocks = array();
+
+    $blocks['search_sim'] = array(
+        'info' => t('Search sim block'),
+    );
+    return $blocks;
+}
+
+function simcore_block_view($delta='') {
+    $block = array();
+    switch($delta) {
+        case 'search_sim' :
+            $block['subject'] = t("Công cụ tìm kiếm");
+            $block['content'] = simcore_search_block_content();
+        break;
+    }
+
+    return $block;
+}
+
+function simcore_search_block_content() {
+    $result_html = theme('block_search_sim');
+    return $result_html;
+}
+
+
+function simcore_theme(){
+    return array(
+    'block_search_sim' =>  array(
+    'template' => 'template/search',
+    'render element' => 'element'
+    )
+    );
+}

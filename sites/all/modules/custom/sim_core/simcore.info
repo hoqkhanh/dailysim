@@ -1,0 +1,5 @@
+name = Sim So Core
+description = Implement function core of the system
+core = 7.x
+package = simso
+version = "7.x-1.0"
