@@ -312,3 +312,6 @@ form search
 form .description{
     padding-top: 10px;
 }
+.pane-node-content{
+    padding: 15px;
+}

@@ -21,7 +21,6 @@
 
         <div id="center">
             <?php print theme('links__system_main_menu', array('links' => $main_menu, 'attributes' => array('id' => 'main-menu', 'class' => array('links', 'inline', 'clearfix')))); ?>
-            <?php print $breadcrumb; ?>
             <?php if ($tabs): ?><div id="tabs-wrapper" class="clearfix"><?php endif; ?>
                 <?php print render($title_prefix); ?>
                 <?php print render($title_suffix); ?>
