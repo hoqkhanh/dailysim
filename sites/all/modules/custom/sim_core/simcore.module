@@ -1,4 +1,6 @@
 <?php
+module_load_include('inc','simcore','simcore.helper');
+global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA, $TIEN_DON, $TIEN_DOI;
 
 function simcore_block_info() {
     $blocks = array();
@@ -34,4 +36,11 @@ function simcore_theme(){
     'render element' => 'element'
     )
     );
+}
+
+function simcore_node_presave($node){
+    if($node->type == 'sim'){
+       $result =  _get_kind_of_phone_number($node->title);
+       $node->field_lo_i_sim[$node->language][0]['tid'] = $result;
+    }
 }
