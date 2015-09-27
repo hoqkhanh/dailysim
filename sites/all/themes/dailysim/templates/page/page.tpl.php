@@ -9,12 +9,7 @@
             <div id="header-content">
                 <div id="logo"><span class="top">Đại lý sim</span><span class="bottom">.com.vn</span></div>
                 <div id="search-top">
-                    <form role="search" method="get" id="searchform" class="searchform" action="http://demo2.woothemes.com/wootique">
-                        <label class="screen-reader-text" for="s">Search for:</label>
-                        <input type="text" value="" name="s" id="s" class="field s" placeholder="Tìm kiếm sim">
-                        <input type="image" class="submit btn" name="submit" value="Search" src="http://demo2.woothemes.com/wootique/wp-content/themes/wootique/images/ico-search.png">
-                        <input type="hidden" name="post_type" value="product">		</form>
-                    <div class="fix"></div>
+                    <img src="<?php echo base_path().path_to_theme().'/images/logo.png';?>" />
                 </div>
             </div>
         </div>
