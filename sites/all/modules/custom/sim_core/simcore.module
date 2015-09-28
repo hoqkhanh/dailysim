@@ -1,6 +1,5 @@
 <?php
 module_load_include('inc','simcore','simcore.helper');
-global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA, $TIEN_DON, $TIEN_DOI;
 
 function simcore_block_info() {
     $blocks = array();
