@@ -1,5 +1,6 @@
 <?php
-global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA, $TIEN_DON, $TIEN_DOI;
+global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
+       $TIEN_DON, $TIEN_DOI, $GANH_DAO, $NAM_SINH, $TAXI, $TAM_HOA_DON;
 
     $TU_QUY = 1;
     $NGU_QUY = 2;
@@ -9,12 +10,17 @@ global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA, $TIEN_DON, $
     $OND_DIA = 6;
     $TIEN_DON = 7;
     $TIEN_DOI = 8;
+    $GANH_DAO = 9;
+    $NAM_SINH = 10;
+    $TAXI = 11;
+    $TAM_HOA_DON = 12;
 
 
 function _get_kind_of_phone_number($number){
-    global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA, $TIEN_DON, $TIEN_DOI;
-    $types = [$TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT,
-        $THAN_TAI, $OND_DIA, $TIEN_DON, $TIEN_DOI];
+    global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
+           $TIEN_DON, $TIEN_DOI, $GANH_DAO, $NAM_SINH, $TAXI, $TAM_HOA_DON;
+    $types = [$TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
+        $TIEN_DON, $TIEN_DOI, $GANH_DAO, $NAM_SINH, $TAXI, $TAM_HOA_DON];
     $functionNames = ['is_tu_quy','is_ngu_quy','is_luc_quy','is_loc_phat',
         'is_than_tai','is_ong_dia','is_tien_don'];
     $result = 0;
@@ -106,5 +112,73 @@ function is_tien_don($phoneNumber){
         return $TIEN_DON;
     }
     return $result;
+}
+
+function is_tien_doi($phoneNumber){
+}
+
+
+function is_taxi($phoneNumber){
+    global $TAXI;
+    $result = preg_match('/(([0-9]{3})\g2|([0-9]{2})\g3{2})$/',$phoneNumber);
+    if($result){
+        return $TAXI;
+    }
+    return $result;
+}
+
+function is_lap($phoneNumber){
+}
+
+function is_kep($phoneNumber){
+    global $TIEN_DON;
+    $result = preg_match('/(000111|0011|000222|0022|000333|0033|000444|0044|000555|0055|000666|0066|000777|0077|000888|0088|000999|0099|111000|1100|111222|1122|111333|1133|111444|1144|111555|1155|111666|1166|111777|1177|111888|1188|111999|1199|222000|2200|222111|2211|222333|2233|222444|2244|222555|2255|222666|2266|222777|2277|222888|2288|222999|2299|333000|3300|333111|3311|333222|3322|333444|3344|333555|3355|333666|3366|333777|3377|333888|3388|333999|3399|444000|4400|444111|4411|444222|4422|444333|4433|444555|4455|444666|4466|444777|4477|444888|4488|444999|4499|555000|5500|555111|5511|555222|5522|555333|5533|555444|5544|555666|5566|555777|5577|555888|5588|555999|5599|666000|6600|666111|6611|666222|6622|666333|6633|666444|6644|666555|6655|666777|6677|666888|6688|666999|6699|777000|7700|777111|7711|777222|7722|777333|7733|777444|7744|777555|7755|777666|7766|777888|7788|777999|7799|888000|8800|888111|8811|888222|8822|888333|8833|888444|8844|888555|8855|888666|8866|888777|8877|888999|8899|999000|9900|999111|9911|999222|9922|999333|9933|999444|9944|999555|9955|999666|9966|999777|9977|999888|9988)$/',$phoneNumber);
+    if($result){
+        return $TIEN_DON;
+    }
+    return $result;
+}
+
+function is_doi($phoneNumber){
+}
+
+function is_ganh_dao($phoneNumber){
+    global $GANH_DAO;
+    $result = preg_match('/(([0-9]{2})([0-9]{1,2})\g{-2}|([0-9]{1})([0-9]{1})\g{-1}\g{-2})$/',$phoneNumber);
+    if($result){
+        return $GANH_DAO;
+    }
+    return $result;
+}
+
+
+function is_dac_biet($phoneNumber){
+}
+
+function is_nam_sinh($phoneNumber){
+    global $NAM_SINH;
+    $result = preg_match('/(((0[123456789]|[1-2][0-9]|30)(0[123456789]|10|11|12)(([6-9][0-9])|([1][0-2])|([0][0-9])))|19[6-9]\d|20[0-1]\d)$/',$phoneNumber);
+    if($result){
+        return $NAM_SINH;
+    }
+    return $result;
+}
+
+function is_dau_so_co($phoneNumber){
+}
+
+function is_tam_hoa_don($phoneNumber){
+    global $TAM_HOA_DON;
+    $result = preg_match('/([0-9])\1{2}$/',$phoneNumber);
+    if($result){
+        return $TAM_HOA_DON;
+    }
+    return $result;
+}
+
+function is_tam_hoa_kep($phoneNumber){
+}
+
+function is_nam_sinh_dd_mm_yy($phoneNumber){
 }
 ?>
