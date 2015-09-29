@@ -57,7 +57,9 @@ function simcore_node_presave($node){
     if($node->type == 'sim'){
         if(empty($node->field_lo_i_sim[$node->language][0]['tid'])){
            $result =  _get_kind_of_phone_number($node->title);
-           $node->field_lo_i_sim[$node->language][0]['tid'] = $result;
+            if(!empty($result)){
+                $node->field_lo_i_sim[$node->language][0]['tid'] = $result;
+            }
         }
     }
 }

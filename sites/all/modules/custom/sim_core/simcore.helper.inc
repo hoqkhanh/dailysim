@@ -1,6 +1,7 @@
 <?php
 global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
-       $TIEN_DON, $TIEN_DOI, $GANH_DAO, $NAM_SINH, $TAXI, $TAM_HOA_DON;
+       $TIEN_DON, $TIEN_DOI, $GANH_DAO, $NAM_SINH, $TAXI, $LAP, $KEP, $DOI,
+       $DAO, $DACBIET, $TAM_HOA_DON, $TAM_HOA_KEP, $DAUSOCO, $NAM_SINH;
 
     $TU_QUY = 1;
     $NGU_QUY = 2;
@@ -9,18 +10,29 @@ global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
     $THAN_TAI = 5;
     $OND_DIA = 6;
     $TIEN_DON = 7;
-    $KEP = 8;
-    $GANH_DAO = 9;
-    $NAM_SINH = 10;
-    $TAXI = 11;
-    $TAM_HOA_DON = 12;
-
+    $TIEN_DON = 8;
+    $GANH_DAO = 30;
+    $TAXI = 9;
+    $LAP = 12;
+    $KEP = 13;
+    $DOI = 14;
+    $DAO = 15;
+    $GANH = 16;
+    $DACBIET = 17;
+    $TAM_HOA_DON = 20;
+    $TAM_HOA_KEP = 21;
+    $DAUSOCO = 19;
+    $NAM_SINH = 18;
 
 function _get_kind_of_phone_number($number){
     global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
-           $TIEN_DON, $KEP, $GANH_DAO, $NAM_SINH, $TAXI, $TAM_HOA_DON;
+           $TIEN_DON, $TIEN_DOI, $GANH_DAO, $NAM_SINH, $TAXI, $LAP, $KEP, $DOI,
+           $DAO, $DACBIET, $TAM_HOA_DON, $TAM_HOA_KEP, $DAUSOCO, $NAM_SINH;
+
     $types = [$TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
-        $TIEN_DON, $KEP, $GANH_DAO, $NAM_SINH, $TAXI, $TAM_HOA_DON];
+        $TIEN_DON, $TIEN_DOI, $GANH_DAO, $NAM_SINH, $TAXI, $LAP, $KEP, $DOI,
+        $DAO, $DACBIET, $TAM_HOA_DON, $TAM_HOA_KEP, $DAUSOCO, $NAM_SINH];
+
     $functionNames = ['is_tu_quy','is_ngu_quy','is_luc_quy','is_loc_phat',
         'is_than_tai','is_ong_dia','is_tien_don', 'is_taxi', 'is_kep',
         'is_ganh_dao', 'is_nam_sinh', 'is_tam_hoa_don'];
