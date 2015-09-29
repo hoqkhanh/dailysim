@@ -1,6 +1,17 @@
 <?php
 module_load_include('inc','simcore','simcore.helper');
 
+function simcore_menu(){
+    $items['admin/sim-importer'] = array(
+        'title' => 'Sim importer',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('sim_import_admin'),
+        'access arguments' => array('administer settings'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
 function simcore_block_info() {
     $blocks = array();
 
@@ -30,10 +41,15 @@ function simcore_search_block_content() {
 
 function simcore_theme(){
     return array(
-    'block_search_sim' =>  array(
-    'template' => 'template/search',
-    'render element' => 'element'
-    )
+        'block_search_sim' =>  array(
+        'template' => 'template/search',
+        'render element' => 'element'
+    ),
+        'import__page' => array(
+            'render element' => 'page',
+            'template' => 'template/page--import',
+        )
+
     );
 }
 
@@ -42,4 +58,63 @@ function simcore_node_presave($node){
        $result =  _get_kind_of_phone_number($node->title);
        $node->field_lo_i_sim[$node->language][0]['tid'] = $result;
     }
+}
+
+function  sim_import_admin($form, &$form_state){
+    $form = array();
+    $form['file'] = array(
+        '#type' => 'file',
+        '#title' => t('File để import sim'),
+        '#description' => t('Upload file với định dạng là csv'),
+        '#upload_validators' => array('file_validate_extensions' => array('csv')),
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit'),
+    );
+    return $form;
+}
+
+function sim_import_admin_validate($form, &$form_state) {
+    $file = file_save_upload('file', array(
+        'file_validate_extensions' => array('csv'),
+    ));
+    if ($file) {
+        if ($file = file_move($file, 'public://')) {
+            $form_state['values']['file'] = $file;
+        }
+        else {
+            form_set_error('file', t('Không thể upload file vào folder.'));
+        }
+    }
+    else {
+        form_set_error('file', t('Không có file, vui lòng thử lại.'));
+    }
+}
+
+function sim_import_admin_submit($form, &$form_state) {
+    $file=$form_state['values']['file'];
+    unset($form_state['values']['file']);
+    $file->status = FILE_STATUS_PERMANENT;
+    file_save($file);
+    import_file_progress($file->fid);
+    drupal_set_message(t('Bạn đã import thành công @filename.', array('@filename' => $file->filename)));
+}
+
+function import_file_progress($fid){
+// Given that we have a new file that is now managed by Drupal.
+    $file = file_load($fid);
+    $importer_id = 'sim_importer';
+// Load the source fetcher config.
+    $source = feeds_source($importer_id);
+    $fetcher_config = $source->getConfigFor($source->importer->fetcher);
+// Add the new file object, and it's uri to the fetcher config.
+    $fetcher_config['source'] = $file->uri;
+    $fetcher_config['file'] = $file;
+// Set the source fetcher config.
+    $source->setConfigFor($source->importer->fetcher, $fetcher_config);
+// Save the source.
+    $source->save();
+    $source->startImport();
 }
