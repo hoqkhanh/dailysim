@@ -432,3 +432,42 @@ table a{
 .view-id-list_news .views-field-title{
     padding-bottom: 10px;
 }
+.webform-client-form-41 input{
+     color: #000;
+     padding: 3px;
+ }
+.webform-client-form-41 select{
+    padding: 5px;
+}
+::-webkit-input-placeholder {
+    color: #000;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: #000;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: #000;
+}
+
+:-ms-input-placeholder {
+    color: #000;
+}
+#webform-client-form-41{
+    padding-top: 0 !important;
+}
+input.webform-submit{
+    background-color: #02cc15;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    padding: 7px;
+    font-weight: bold;
+}
+.webform-client-form-41 textarea{
+    width: 460px;
+}
+.grippie{
+    display: none !important;
+}

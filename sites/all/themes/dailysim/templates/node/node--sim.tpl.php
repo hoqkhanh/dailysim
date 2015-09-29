@@ -39,12 +39,20 @@
         $block_payment = block_load('block', 3);
         $renderable_block=  _block_get_renderable_array(_block_render_blocks(array($block_payment)));
     ?>
+    <div id="form-order">
+        <h2>Thông tin khách hàng đặt SIM</h2>
+        <?php
+        $block = module_invoke('webform', 'block_view', 'client-block-41');
+        print render($block['content']);
+        ?>
+    </div>
     <div id="block-payment">
         <h2><?php echo $renderable_block['block_3']['#block']->title;?></h2>
         <div class="content">
             <?php echo $renderable_block['block_3']['#markup'];?>
         </div>
     </div>
+
 
   <div class="clearfix">
     <?php if (!empty($content['links'])): ?>
