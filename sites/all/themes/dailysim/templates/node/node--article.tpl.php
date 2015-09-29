@@ -10,16 +10,12 @@
   <?php endif; ?>
   <?php print render($title_suffix); ?>
 
-  <?php if ($display_submitted): ?>
-    <span class="submitted"><?php print $submitted ?></span>
-  <?php endif; ?>
 
+    <h2 class="title-news"><?php echo $node->title;?></h2>
   <div class="content clearfix"<?php print $content_attributes; ?>>
     <?php
       // We hide the comments and links now so that we can render them later.
-      hide($content['comments']);
-      hide($content['links']);
-      print render($content);
+      print render($content['body']);
     ?>
   </div>
 
@@ -27,8 +23,6 @@
     <?php if (!empty($content['links'])): ?>
       <div class="links"><?php print render($content['links']); ?></div>
     <?php endif; ?>
-
-    <?php print render($content['comments']); ?>
   </div>
 
 </div>
