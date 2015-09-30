@@ -54,9 +54,13 @@ function simcore_theme(){
 }
 
 function simcore_node_presave($node){
+    $dai_ly = variable_get('dai_ly');
     if($node->type == 'sim'){
         if(empty($node->field_lo_i_sim[$node->language][0]['tid'])){
            $result =  _get_kind_of_phone_number($node->title);
+            if(!empty($dai_ly)){
+                $node->field_dai_ly[$node->language][0]['value'] = $dai_ly;
+            }
             if(!empty($result)){
                 $node->field_lo_i_sim[$node->language][0]['tid'] = $result;
             }
@@ -71,6 +75,12 @@ function  sim_import_admin($form, &$form_state){
         '#title' => t('File để import sim'),
         '#description' => t('Upload file với định dạng là csv'),
         '#upload_validators' => array('file_validate_extensions' => array('csv')),
+    );
+
+    $form['dai_ly'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Đại lý'),
+        '#description' => t('Nhập đại lý'),
     );
 
     $form['submit'] = array(
@@ -100,6 +110,8 @@ function sim_import_admin_validate($form, &$form_state) {
 function sim_import_admin_submit($form, &$form_state) {
     $file=$form_state['values']['file'];
     unset($form_state['values']['file']);
+    $dai_ly = $form_state['values']['dai_ly'];
+    variable_set('dai_ly',$dai_ly);
     $file->status = FILE_STATUS_PERMANENT;
     file_save($file);
     import_file_progress($file->fid);
