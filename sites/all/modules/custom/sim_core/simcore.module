@@ -1,11 +1,19 @@
 <?php
 module_load_include('inc','simcore','simcore.helper');
+module_load_include('inc','simcore','simcore.functionhelper');
 
 function simcore_menu(){
     $items['admin/sim-importer'] = array(
         'title' => 'Sim importer',
         'page callback' => 'drupal_get_form',
         'page arguments' => array('sim_import_admin'),
+        'access arguments' => array('administer settings'),
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['admin/cong-no'] = array(
+        'title' => 'Cong no',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('cong_no_admin'),
         'access arguments' => array('administer settings'),
         'type' => MENU_NORMAL_ITEM,
     );
@@ -55,20 +63,32 @@ function simcore_theme(){
 
 function simcore_node_presave($node){
     $dai_ly = variable_get('dai_ly');
-    if($node->type == 'sim'){
+    if($node->type == 'sim' && $node->is_new == TRUE){
         if(empty($node->field_lo_i_sim[$node->language][0]['tid'])){
            $result =  _get_kind_of_phone_number($node->title);
+
             if(!empty($dai_ly)){
-                $node->field_dai_ly[$node->language][0]['value'] = $dai_ly;
+                $node->field_dai_ly[$node->language][0]['tid'] = $dai_ly;
             }
             if(!empty($result)){
                 $node->field_lo_i_sim[$node->language][0]['tid'] = $result;
             }
         }
+        $gia = variable_get('gia');
+        if(!empty($gia) && isset($gia)){
+            $node->field_gia[$node->language][0]['value'] = convertPriceTextToNumber($gia);
+        }
+        variable_del('gia');
     }
 }
 
 function  sim_import_admin($form, &$form_state){
+    $vocabulary = taxonomy_vocabulary_machine_name_load('dai_ly');
+    $terms = entity_load('taxonomy_term', FALSE, array('vid' => $vocabulary->vid));
+    $options = array();
+      foreach($terms as $term){
+          $options[$term->tid] = $term->name;
+      }
     $form = array();
     $form['file'] = array(
         '#type' => 'file',
@@ -78,7 +98,8 @@ function  sim_import_admin($form, &$form_state){
     );
 
     $form['dai_ly'] = array(
-        '#type' => 'textfield',
+        '#type' => 'select',
+        '#options' => $options,
         '#title' => t('Đại lý'),
         '#description' => t('Nhập đại lý'),
     );
@@ -118,6 +139,7 @@ function sim_import_admin_submit($form, &$form_state) {
     drupal_set_message(t('Bạn đã import thành công @filename.', array('@filename' => $file->filename)));
 }
 
+
 function import_file_progress($fid){
 // Given that we have a new file that is now managed by Drupal.
     $file = file_load($fid);
@@ -133,4 +155,66 @@ function import_file_progress($fid){
 // Save the source.
     $source->save();
     $source->startImport();
+}
+
+function simcore_feeds_presave(FeedsSource $source, $entity, $item){
+    if($entity->feeds_item->entity_type == 'node'){
+        $item['gia'] = convertPriceTextToNumber($item['gia']);
+        variable_set('gia', $item['gia']);
+    }
+}
+
+
+function cong_no_admin(){
+    $vocabulary = taxonomy_vocabulary_machine_name_load('dai_ly');
+    $terms = entity_load('taxonomy_term', FALSE, array('vid' => $vocabulary->vid));
+    $options = array();
+    $month = array();
+    foreach($terms as $term){
+        $options[$term->tid] = $term->name;
+    }
+
+    for($i = 1; $i < 12; $i ++){
+        $month[$i] = 'Tháng '.$i;
+    }
+    $form = array();
+    $form['dai_ly'] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#title' => t('Đại lý'),
+        '#description' => t('Nhập đại lý'),
+    );
+
+    $form['month'] = array(
+        '#type' => 'select',
+        '#options' => $month,
+        '#title' => t('Tháng'),
+        '#description' => t('Chọn tháng'),
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit'),
+    );
+    return $form;
+}
+
+function cong_no_admin_submit($form, &$form_state){
+    form_state_values_clean($form_state);
+    $term  = taxonomy_term_load($form_state['values']['dai_ly']);
+    $field_chiet_khau = field_get_items('taxonomy_term', $term,'field_chiet_khau');
+    $field_chiet_khau = _field_collection_load_items($field_chiet_khau);
+    $sims = taxonomy_select_nodes($form_state['values']['dai_ly'], false);
+    $simsDetail = node_load_multiple($sims);
+    $listSimsByMonth = array();
+
+    foreach($simsDetail as $simDetail){
+        if(!empty($simDetail->field_ngay_ban_sim['und'][0]['value'])){
+            if(date('m', strtotime($simDetail->field_ngay_ban_sim['und'][0]['value'])) == $form_state['values']['month']){
+                $listSimsByMonth[] = $simDetail;
+            }
+        }
+    }
+    $congNo = congNoTypeCalculation($listSimsByMonth, $field_chiet_khau);
+    drupal_set_message(t("Tổng công nợ trong tháng @thang của @daily là @congno đồng",
+        array('@thang' =>$form_state['values']['month'],'@daily' => $term->name, '@congno' => $congNo)));
 }

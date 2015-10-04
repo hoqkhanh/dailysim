@@ -1,4 +1,5 @@
 <?php
+
 global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
        $TIEN_DON, $TIEN_DOI, $GANH_DAO, $NAM_SINH, $TAXI, $LAP, $KEP, $DOI,
        $DAO, $DACBIET, $TAM_HOA_DON, $TAM_HOA_KEP, $DAUSOCO, $NAM_SINH;
@@ -23,6 +24,10 @@ global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
     $TAM_HOA_KEP = 21;
     $DAUSOCO = 19;
     $NAM_SINH = 18;
+
+    $NHO_3TR = 100;
+    $TU_3TR_6TRU = 101;
+    $LON_6TR = 102;
 
 function _get_kind_of_phone_number($number){
     global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
@@ -230,4 +235,45 @@ function is_tam_hoa_kep($phoneNumber){
 
 function is_nam_sinh_dd_mm_yy($phoneNumber){
 }
+
+
+// END OF SIM TYPE DEFINITION
+
+function convertPriceTextToNumber($text){
+    $textAfterFormat = str_replace(array(",","."),"",$text);
+    $priceNumber = intval($textAfterFormat);
+    return $priceNumber;
+}
+
+function congNoTypeCalculation($data, $chietKhau){
+    $tongCongNo = 0;
+    foreach($data as $sim){
+                $tongCongNo += tinhCongNoByPrice($sim->field_gia['und'][0]['value'], $chietKhau);
+    }
+    return $tongCongNo;
+}
+
+function tinhCongNoByPrice($price, $chietKhau){
+    foreach($chietKhau as $loaiChietKhau){
+        if(empty($loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value'])
+            && !empty($loaiChietKhau->field_hang_muc_toi_da['und'][0]['value'])
+            && $price <= $loaiChietKhau->field_hang_muc_toi_da['und'][0]['value']){
+                return $price* (100 - $loaiChietKhau->field_ti_le_chiet_khau['und'][0]['value']) / 100;
+        };
+        if(!empty($loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value'])
+            && !empty($loaiChietKhau->field_hang_muc_toi_da['und'][0]['value'])
+            && $price >= $loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value']
+            && $price <= $loaiChietKhau->field_hang_muc_toi_da['und'][0]['value']){
+            return $price* (100 - $loaiChietKhau->field_ti_le_chiet_khau['und'][0]['value']) / 100;
+        };
+        if(!empty($loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value'])
+            && empty($loaiChietKhau->field_hang_muc_toi_da['und'][0]['value'])
+            && $price >= $loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value']){
+            return $price* (100 - $loaiChietKhau->field_ti_le_chiet_khau['und'][0]['value']) / 100;
+        };
+    }
+    return 0;
+}
+
+
 ?>
