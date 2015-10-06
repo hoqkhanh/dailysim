@@ -20,6 +20,11 @@ function simcore_menu(){
     return $items;
 }
 
+function simcore_menu_alter(&$items) {
+    $items['admin/sim-importer']['access callback'] = 'simcore_user_access';
+    $items['admin/cong-no']['access callback'] = 'simcore_user_access';
+}
+
 function simcore_block_info() {
     $blocks = array();
 
@@ -170,12 +175,17 @@ function cong_no_admin(){
     $terms = entity_load('taxonomy_term', FALSE, array('vid' => $vocabulary->vid));
     $options = array();
     $month = array();
+    $year = array();
     foreach($terms as $term){
         $options[$term->tid] = $term->name;
     }
 
     for($i = 1; $i < 12; $i ++){
         $month[$i] = 'Tháng '.$i;
+    }
+
+    for($y = 2014; $y < 2018; $y ++){
+        $year[$y] = 'Năm '.$y;
     }
     $form = array();
     $form['dai_ly'] = array(
@@ -191,6 +201,14 @@ function cong_no_admin(){
         '#title' => t('Tháng'),
         '#description' => t('Chọn tháng'),
     );
+
+    $form['year'] = array(
+        '#type' => 'select',
+        '#options' => $year,
+        '#title' => t('Năm'),
+        '#description' => t('Chọn năm'),
+    );
+
     $form['submit'] = array(
         '#type' => 'submit',
         '#value' => t('Submit'),
@@ -209,12 +227,23 @@ function cong_no_admin_submit($form, &$form_state){
 
     foreach($simsDetail as $simDetail){
         if(!empty($simDetail->field_ngay_ban_sim['und'][0]['value'])){
-            if(date('m', strtotime($simDetail->field_ngay_ban_sim['und'][0]['value'])) == $form_state['values']['month']){
+            if(date('m Y', strtotime($simDetail->field_ngay_ban_sim['und'][0]['value'])) == $form_state['values']['month'].' '.$form_state['values']['year']){
                 $listSimsByMonth[] = $simDetail;
             }
         }
     }
     $congNo = congNoTypeCalculation($listSimsByMonth, $field_chiet_khau);
-    drupal_set_message(t("Tổng công nợ trong tháng @thang của @daily là @congno đồng",
-        array('@thang' =>$form_state['values']['month'],'@daily' => $term->name, '@congno' => $congNo)));
+    drupal_set_message(t("Tổng công nợ trong tháng @thang năm @nam của @daily là @congno đồng",
+        array('@thang' =>$form_state['values']['month'],'@daily' => $term->name, '@nam' => $form_state['values']['year'], '@congno' => $congNo)));
+}
+
+function simcore_user_access($account) {
+    global $user;
+    if($user->uid == 1){
+        return TRUE;
+    }
+    if($user->name == 'admin' || $user->uid == 19){
+        return TRUE;
+    }
+    return FALSE;
 }
