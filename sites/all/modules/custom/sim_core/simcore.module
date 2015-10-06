@@ -80,10 +80,15 @@ function simcore_node_presave($node){
             }
         }
         $gia = variable_get('gia');
+        $so = variable_get('so');
         if(!empty($gia) && isset($gia)){
-            $node->field_gia[$node->language][0]['value'] = convertPriceTextToNumber($gia);
+            $node->field_gia[$node->language][0]['value'] = convertTextToNumber($gia);
+        }
+        if(!empty($so) && isset($so)){
+            $node->title[$node->language][0]['value'] = convertTextToNumber($so);
         }
         variable_del('gia');
+        variable_del('so');
     }
 }
 
@@ -164,8 +169,10 @@ function import_file_progress($fid){
 
 function simcore_feeds_presave(FeedsSource $source, $entity, $item){
     if($entity->feeds_item->entity_type == 'node'){
-        $item['gia'] = convertPriceTextToNumber($item['gia']);
+        $item['gia'] = convertTextToNumber($item['gia']);
+        $item['so'] = convertTextToNumber($item['so']);
         variable_set('gia', $item['gia']);
+        variable_set('so', $item['so']);
     }
 }
 

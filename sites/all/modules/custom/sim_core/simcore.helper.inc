@@ -239,7 +239,7 @@ function is_nam_sinh_dd_mm_yy($phoneNumber){
 
 // END OF SIM TYPE DEFINITION
 
-function convertPriceTextToNumber($text){
+function convertTextToNumber($text){
     $textAfterFormat = str_replace(array(",","."),"",$text);
     $priceNumber = intval($textAfterFormat);
     return $priceNumber;
