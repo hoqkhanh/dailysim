@@ -155,7 +155,7 @@ body{
     margin-bottom: 20px;
 }
 
-.sidebar .block-views h2,.sidebar .block-block h2,.main .pane-views h2,.main .pane-block h2 {
+.sidebar .block-views h2,.sidebar .block-block h2,.main .pane-views h2,.main .pane-block h2,#search h2 {
     background-color: #02cc15;
     height: 37px;
     color: #004892;
@@ -482,4 +482,10 @@ input.webform-submit{
 }
 .grippie{
     display: none !important;
+}
+#views-exposed-form-search-sim-page-1{
+    display: none;
+}
+.view-empty p{
+    color: #004892;
 }
