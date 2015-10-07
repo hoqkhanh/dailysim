@@ -245,6 +245,11 @@ function convertTextToNumber($text){
     return $priceNumber;
 }
 
+function formatText($text){
+    $textAfterFormat = str_replace(array(",","."),"",$text);
+    return $textAfterFormat;
+}
+
 function congNoTypeCalculation($data, $chietKhau){
     $tongCongNo = 0;
     foreach($data as $sim){
