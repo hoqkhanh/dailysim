@@ -85,7 +85,7 @@ function simcore_node_presave($node){
             $node->field_gia[$node->language][0]['value'] = convertTextToNumber($gia);
         }
         if(!empty($so) && isset($so)){
-            $node->title[$node->language][0]['value'] = convertTextToNumber($so);
+            $node->field_so_formatted[$node->language][0]['value'] = convertTextToNumber($so);
         }
         variable_del('gia');
         variable_del('so');
