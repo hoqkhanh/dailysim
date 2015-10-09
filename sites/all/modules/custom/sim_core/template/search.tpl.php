@@ -17,7 +17,7 @@
                         )
                     ?>
                     <?php foreach($select_data as $select):?>
-                        <?php if( isset($_GET['mang']) && $_GET['mang'] == $select['value']):?>2
+                        <?php if( isset($_GET['mang']) && $_GET['mang'] == $select['value']):?>2ang
                             <option selected value="<?php echo $select['value'];?>"><?php echo $select['key'];?></option>
                         <?php else:?>
                             <option value="<?php echo $select['value'];?>"><?php echo $select['key'];?></option>
