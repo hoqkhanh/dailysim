@@ -280,5 +280,35 @@ function tinhCongNoByPrice($price, $chietKhau){
     return 0;
 }
 
+function tinhHoaHongSim($price, $chietKhau){
+    foreach($chietKhau as $loaiChietKhau){
+        if(empty($loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value'])
+            && !empty($loaiChietKhau->field_hang_muc_toi_da['und'][0]['value'])
+            && $price <= $loaiChietKhau->field_hang_muc_toi_da['und'][0]['value']){
+            return $loaiChietKhau->field_ti_le_chiet_khau['und'][0]['value'];
+        };
+        if(!empty($loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value'])
+            && !empty($loaiChietKhau->field_hang_muc_toi_da['und'][0]['value'])
+            && $price >= $loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value']
+            && $price <= $loaiChietKhau->field_hang_muc_toi_da['und'][0]['value']){
+            return $loaiChietKhau->field_ti_le_chiet_khau['und'][0]['value'];
+        };
+        if(!empty($loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value'])
+            && empty($loaiChietKhau->field_hang_muc_toi_da['und'][0]['value'])
+            && $price >= $loaiChietKhau->field_hang_muc_toi_tieu['und'][0]['value']){
+            return $loaiChietKhau->field_ti_le_chiet_khau['und'][0]['value'];
+        };
+    }
+    return 0;
+}
+
+function giaThucSim($giaSauChietKhau,$phiCatSim){
+   $result =  $giaSauChietKhau - $phiCatSim;
+   if($result < 0){
+       return $giaSauChietKhau;
+   }
+    return $result;
+}
+
 
 ?>
