@@ -1,5 +1,8 @@
 <?php
-kpr($node);
+$term  = taxonomy_term_load($node->field_dai_ly['und'][0]['tid']);
+$field_chiet_khau = field_get_items('taxonomy_term', $term,'field_chiet_khau');
+$field_chiet_khau = _field_collection_load_items($field_chiet_khau);
+
 ?>
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?>"<?php print $attributes; ?>>
 
@@ -43,7 +46,7 @@ kpr($node);
                 </div>
                 <div class="row">
                     <span class="label">% Hoa hồng:</span>
-                    <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
+                    <span class="value"><?php echo tinhHoaHongSim($node->field_gia['und'][0]['value'],$field_chiet_khau);?> %</span>
                 </div>
                 <div class="row">
                     <span class="label">Phí hỗ trợ cắt sim (nếu có):</span>
@@ -51,11 +54,12 @@ kpr($node);
                 </div>
                 <div class="row">
                     <span class="label">Giá thực của sim:</span>
-                    <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
+                    <span class="value"><?php echo giaThucSim(tinhCongNoByPrice($node->field_gia['und'][0]['value'],$field_chiet_khau),$node->field_dai_ly['und'][0]['taxonomy_term']->field_ho_tro_cat_sim['und'][0]['value']);?> VNĐ</span>
                 </div>
                 <div class="row">
                     <span class="label">Tiền lời:</span>
-                    <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
+                    <span class="value"><?php echo ($node->field_gia['und'][0]['value'] -
+                            (tinhCongNoByPrice($node->field_gia['und'][0]['value'],$field_chiet_khau) - $node->field_dai_ly['und'][0]['taxonomy_term']->field_ho_tro_cat_sim['und'][0]['value']));?> VNĐ</span>
                 </div>
 
 <!--            <a class="daily-link" href="--><?php //echo base_path().drupal_get_path_alias('taxonomy/term/'.$node->field_dai_ly['und'][0]['taxonomy_term']->tid);?><!--">Xem chi tiết ></a>-->
