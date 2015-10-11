@@ -31,7 +31,7 @@
         <?php if(user_is_logged_in()):?>
         <div class="row">
             <span class="label">Đại lý:</span>
-            <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
+            <span class="value"><a href="<?php ?>"></a><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></a></span>
         </div>
         <?php endif;?>
     </div>
