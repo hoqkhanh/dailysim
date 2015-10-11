@@ -1,4 +1,5 @@
 <?php
+kpr($node);
 ?>
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?>"<?php print $attributes; ?>>
 
@@ -28,11 +29,36 @@
             <span class="label">Loại sim:</span>
             <span class="value"><?php echo $node->field_lo_i_sim['und'][0]['taxonomy_term']->name;?></span>
         </div>
+    </div>
+    <h2>Thông tin quản lý sim</h2>
+    <div id="info-sim">
         <?php if(user_is_logged_in()):?>
-        <div class="row">
-            <span class="label">Đại lý:</span>
-            <span class="value"><a href="<?php ?>"></a><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></a></span>
-        </div>
+                <div class="row">
+                    <span class="label">Tên đại lý:</span>
+                    <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
+                </div>
+                <div class="row">
+                    <span class="label">Số điện thoại đại lý:</span>
+                    <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->field_phone['und'][0]['safe_value'];?></span>
+                </div>
+                <div class="row">
+                    <span class="label">% Hoa hồng:</span>
+                    <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
+                </div>
+                <div class="row">
+                    <span class="label">Phí hỗ trợ cắt sim (nếu có):</span>
+                    <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->field_ho_tro_cat_sim['und'][0]['value'];?> VNĐ</span>
+                </div>
+                <div class="row">
+                    <span class="label">Giá thực của sim:</span>
+                    <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
+                </div>
+                <div class="row">
+                    <span class="label">Tiền lời:</span>
+                    <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
+                </div>
+
+<!--            <a class="daily-link" href="--><?php //echo base_path().drupal_get_path_alias('taxonomy/term/'.$node->field_dai_ly['und'][0]['taxonomy_term']->tid);?><!--">Xem chi tiết ></a>-->
         <?php endif;?>
     </div>
 
