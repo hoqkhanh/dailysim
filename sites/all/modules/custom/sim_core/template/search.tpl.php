@@ -1,4 +1,4 @@
-<form id="search" action="<?php echo $GLOBALS['base_url']?>/search" method="get">
+<form id="search" action="<?php echo $GLOBALS['base_url']?>/search/sim" method="get">
     <input name="do" value="search" type="hidden">
     <div class="row">
         <span class="line"></span>

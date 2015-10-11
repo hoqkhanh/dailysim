@@ -37,18 +37,22 @@ kpr($node);
                     <span class="label">Tên đại lý:</span>
                     <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
                 </div>
+                <?php if(isset($node->field_dai_ly['und'][0]['taxonomy_term']->field_phone['und'][0])):?>
                 <div class="row">
                     <span class="label">Số điện thoại đại lý:</span>
                     <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->field_phone['und'][0]['safe_value'];?></span>
                 </div>
+                <?php endif;?>
                 <div class="row">
                     <span class="label">% Hoa hồng:</span>
                     <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
                 </div>
+                <?php if(isset($node->field_dai_ly['und'][0]['taxonomy_term']->field_ho_tro_cat_sim['und'][0])):?>
                 <div class="row">
                     <span class="label">Phí hỗ trợ cắt sim (nếu có):</span>
                     <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->field_ho_tro_cat_sim['und'][0]['value'];?> VNĐ</span>
                 </div>
+                 <?php endif;?>
                 <div class="row">
                     <span class="label">Giá thực của sim:</span>
                     <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>

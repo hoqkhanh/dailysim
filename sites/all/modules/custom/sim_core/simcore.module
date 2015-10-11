@@ -17,8 +17,36 @@ function simcore_menu(){
         'access arguments' => array('administer settings'),
         'type' => MENU_NORMAL_ITEM,
     );
-    return $items;
 }
+
+function search_handle(){
+
+    $query = array();
+    $so = $_GET['so'];
+    $mang = $_GET['mang'];
+    $gia = $_GET['gia'];
+
+    if(!empty($so)){
+        $so_strim = trim($so,'.');
+        if (strpos($so_strim,'*') !== false) {
+            echo 'true';
+        }
+        else{
+
+        }
+    }
+    if(!empty($mang)){
+        $query['mang'] = $mang;
+    }
+    if(!empty($gia)){
+        $query['gia[min]'] = array("min" => $gia['min']);
+        $query['gia[max]'] = array("min" => $gia['max']);
+    }
+
+   return $query;
+}
+
+
 
 function simcore_menu_alter(&$items) {
     $items['admin/sim-importer']['access callback'] = 'simcore_user_access';
