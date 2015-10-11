@@ -33,9 +33,10 @@ $field_chiet_khau = _field_collection_load_items($field_chiet_khau);
             <span class="value"><?php echo $node->field_lo_i_sim['und'][0]['taxonomy_term']->name;?></span>
         </div>
     </div>
+    <?php if(user_is_logged_in()):?>
     <h2>Thông tin quản lý sim</h2>
     <div id="info-sim">
-        <?php if(user_is_logged_in()):?>
+
                 <div class="row">
                     <span class="label">Tên đại lý:</span>
                     <span class="value"><?php echo $node->field_dai_ly['und'][0]['taxonomy_term']->name;?></span>
@@ -67,8 +68,8 @@ $field_chiet_khau = _field_collection_load_items($field_chiet_khau);
                 </div>
 
 <!--            <a class="daily-link" href="--><?php //echo base_path().drupal_get_path_alias('taxonomy/term/'.$node->field_dai_ly['und'][0]['taxonomy_term']->tid);?><!--">Xem chi tiết ></a>-->
-        <?php endif;?>
     </div>
+    <?php endif;?>
 
   <div class="content clearfix"<?php print $content_attributes; ?>>
       <div id="form-order">

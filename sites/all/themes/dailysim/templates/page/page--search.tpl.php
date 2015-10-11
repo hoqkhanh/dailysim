@@ -39,7 +39,39 @@
                             print render($block['content']);
                             ?>
                         </div>
-                        <?php print render($page['content']); ?>
+                        <?php
+                            $name = 'search_sim';
+                            $display = 'page';
+                            $query = search_handle();
+                            $alter = array('exposed' =>$query);
+                            $view = views_get_view($name);
+                            $view->init_display($display);
+                            $view->preview=TRUE;
+                            $view->is_cacheable = FALSE;
+
+
+                            if(isset($alter['exposed'])){
+                                foreach($alter['exposed'] as $key => $valor){
+
+                                    $view->exposed_input[$key] = $valor;
+
+                                }
+                            }
+
+                            $view->pre_execute();
+                            $output = $view->display_handler->preview();
+                            $view->post_execute();
+
+                            $nid_data = array();
+                            if(!empty($view->result)){
+                               foreach($view->result as $node){
+                                   $nid_data[] = $node->nid;
+                               }
+                            }
+                        ?>
+                        <?php
+                        print views_embed_view('search_sim', 'block',$nid_data );
+                        ?>
                     </div>
                 </div>
                 <?php if ($page['right']): ?>

@@ -17,6 +17,7 @@ function simcore_menu(){
         'access arguments' => array('administer settings'),
         'type' => MENU_NORMAL_ITEM,
     );
+    return $items;
 }
 
 function search_handle(){
@@ -27,19 +28,31 @@ function search_handle(){
     $gia = $_GET['gia'];
 
     if(!empty($so)){
-        $so_strim = trim($so,'.');
+        $so_strim_dots = str_replace('.','',$so);
+        $so_strim = $name = preg_replace('/\s+/', '', $so_strim_dots);
         if (strpos($so_strim,'*') !== false) {
-            echo 'true';
+            $end = strstr($so_strim, '*');
+            $start = strstr($so_strim, '*', true); // As of PHP 5.3.0
+            $start = str_replace('*','',$start);
+            $end = str_replace('*','',$end);
+            if(!empty($start)){
+                $query['so_start'] = $start;
+            }
+            if(!empty($end)){
+                $query['so_end'] = $end;
+            }
         }
         else{
-
+            $query['so'] = $so_strim;
         }
     }
     if(!empty($mang)){
         $query['mang'] = $mang;
     }
-    if(!empty($gia)){
+    if(!empty($gia['min'])){
         $query['gia[min]'] = array("min" => $gia['min']);
+    }
+    if(!empty($gia['max'])){
         $query['gia[max]'] = array("min" => $gia['max']);
     }
 
