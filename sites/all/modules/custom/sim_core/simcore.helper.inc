@@ -147,8 +147,9 @@ function is_tu_quy($phoneNumber){
 function is_tu_quy_giua($phoneNumber){
     global $TU_QUY_GIUA;
     $result = preg_match('/([0-9])\1{3}/',$phoneNumber);
-    if(!empty(is_tu_quy($phoneNumber))){
-        return is_tu_quy($phoneNumber);
+    $isTuQuy = is_tu_quy($phoneNumber);
+    if(!empty($isTuQuy)){
+        return $isTuQuy;
     }
     if($result){
         return $TU_QUY_GIUA;
@@ -168,8 +169,9 @@ function is_ngu_quy($phoneNumber){
 function is_ngu_quy_giua($phoneNumber){
     global $NGU_QUY_GIUA;
     $result = preg_match('/([0-9])\1{4}/',$phoneNumber);
-    if(!empty(is_ngu_quy($phoneNumber))){
-        return is_ngu_quy($phoneNumber);
+    $isNguQuy = is_ngu_quy($phoneNumber);
+    if(!empty($isNguQuy)){
+        return $isNguQuy;
     }
     if($result){
         return $NGU_QUY_GIUA;
@@ -190,8 +192,10 @@ function is_luc_quy($phoneNumber){
 function is_luc_quy_giua($phoneNumber){
     global $LUC_QUY_GIUA;
     $result = preg_match('/([0-9])\1{5}/',$phoneNumber);
-    if(!empty(is_luc_quy($phoneNumber))){
-        return is_luc_quy($phoneNumber);
+    $isLucQuy = is_luc_quy($phoneNumber);
+
+    if(!empty($isLucQuy)){
+        return $isLucQuy;
     }
     if($result){
         return $LUC_QUY_GIUA;
