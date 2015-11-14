@@ -22,20 +22,8 @@ $field_chiet_khau = _field_collection_load_items($field_chiet_khau);
         </div>
         <div class="row">
             <span class="label">Giá tiền:</span>
-            <?php
-
-                $gia = $node->field_gia['und'][0]['value'];
-                $gia_full = 0;
-
-                if (strpos($gia ,'000000') !== false && strlen($gia) > 7) {
-                    $gia_full =  str_replace("000000"," triệu",$gia );
-                }
-                else{
-                    $gia_full =  $gia;
-                }
-
-            ?>
-            <span class="value"><?php echo $gia_full;?> VNĐ</span>
+            <?php ?>
+            <span class="value"><?php echo number_format($node->field_gia['und'][0]['value']);?> VNĐ</span>
         </div>
         <div class="row">
             <span class="label">Nhà mạng:</span>
@@ -72,11 +60,11 @@ $field_chiet_khau = _field_collection_load_items($field_chiet_khau);
                  <?php endif;?>
                 <div class="row">
                     <span class="label">Giá thực của sim:</span>
-                    <span class="value"><?php echo giaThucSim(tinhCongNoByPrice($node->field_gia['und'][0]['value'],$field_chiet_khau),$node->field_dai_ly['und'][0]['taxonomy_term']->field_ho_tro_cat_sim['und'][0]['value']);?> VNĐ</span>
+                    <span class="value"><?php echo number_format(giaThucSim(tinhCongNoByPrice($node->field_gia['und'][0]['value'],$field_chiet_khau),$node->field_dai_ly['und'][0]['taxonomy_term']->field_ho_tro_cat_sim['und'][0]['value']));?> VNĐ</span>
                 </div>
                 <div class="row">
                     <span class="label">Tiền lời:</span>
-                    <span class="value"><?php echo ($node->field_gia['und'][0]['value'] -
+                    <span class="value"><?php echo number_format($node->field_gia['und'][0]['value'] -
                             (tinhCongNoByPrice($node->field_gia['und'][0]['value'],$field_chiet_khau) - $node->field_dai_ly['und'][0]['taxonomy_term']->field_ho_tro_cat_sim['und'][0]['value']));?> VNĐ</span>
                 </div>
 

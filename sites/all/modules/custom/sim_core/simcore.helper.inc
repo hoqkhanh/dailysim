@@ -12,7 +12,7 @@ global $TU_QUY, $NGU_QUY, $LUC_QUY, $LOC_PHAT, $THAN_TAI, $OND_DIA,
     $THAN_TAI = 5;
     $OND_DIA = 6;
     $TIEN_DON = 7;
-    $GANH_DAO = 30;
+    $GANH_DAO = 36;
     $TAXI = 9;
     $LAP = 12;
     $KEP = 13;
