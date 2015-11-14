@@ -1,4 +1,4 @@
-<form id="search" action="<?php echo $GLOBALS['base_url']?>/search/sim" method="get">
+<form id="search" action="<?php echo $GLOBALS['base_url']?>/search" method="get">
     <input name="do" value="search" type="hidden">
     <div class="row">
         <span class="line"></span>
@@ -51,6 +51,10 @@
             </div>
             <div class="clearfix"></div>
             <div class="row text-center">
+            </div>
+            <div class="description">
+                <div class="line"></div>
+                <div><strong class="red font-11">Hot key:</strong> <span class="hotkey">0912*68, 090*888, 0913* </span></div>
             </div>
         </div>
     </div>

@@ -22,7 +22,20 @@ $field_chiet_khau = _field_collection_load_items($field_chiet_khau);
         </div>
         <div class="row">
             <span class="label">Giá tiền:</span>
-            <span class="value"><?php echo $node->field_gia['und'][0]['value'];?> VNĐ</span>
+            <?php
+
+                $gia = $node->field_gia['und'][0]['value'];
+                $gia_full = 0;
+
+                if (strpos($gia ,'000000') !== false && strlen($gia) > 7) {
+                    $gia_full =  str_replace("000000"," triệu",$gia );
+                }
+                else{
+                    $gia_full =  $gia;
+                }
+
+            ?>
+            <span class="value"><?php echo $gia_full;?> VNĐ</span>
         </div>
         <div class="row">
             <span class="label">Nhà mạng:</span>

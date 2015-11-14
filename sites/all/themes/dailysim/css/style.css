@@ -483,9 +483,9 @@ input.webform-submit{
 .grippie{
     display: none !important;
 }
-/*#views-exposed-form-search-sim-page-1{*/
+#views-exposed-form-search-sim-page-1{
     /*display: none;*/
-/*}*/
+}
 .view-empty p{
     color: #004892;
 }

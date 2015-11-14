@@ -68,9 +68,10 @@
                                    $nid_data[] = $node->nid;
                                }
                             }
+                        $nid_s = implode(',',$nid_data)
                         ?>
                         <?php
-                        print views_embed_view('search_sim', 'block',$nid_data );
+                        print views_embed_view('search_sim', 'block',$nid_s );
                         ?>
                     </div>
                 </div>
