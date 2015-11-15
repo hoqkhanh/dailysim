@@ -409,5 +409,31 @@ function giaThucSim($giaSauChietKhau,$phiCatSim){
     return $result;
 }
 
+function checkNhaMang($phoneNumber){
+    if(preg_match('/^(091|094|0123|0124|0125|0127|0129)/',$phoneNumber)){
+        return "vinaphone";
+    }
+    if(preg_match('/^(090|093|0120|0121|0122|0126|0128)/',$phoneNumber)){
+        return "mobiphone";
+    }
+    if(preg_match('/^(097|098|096|0162|0163|0164|0165|0166|0167|0168|0169)/',$phoneNumber)){
+        return "viettel";
+    }
+    if(preg_match('/^(092|0186|0188)/',$phoneNumber)){
+        return "vietnamobile";
+    }
+    if(preg_match('/^(099|0199)/',$phoneNumber)){
+        return "gmobile";
+    }
+    return null;
+}
 
+function getNhaMangTermId($phoneNumber){
+    $nhaMang = checkNhaMang($phoneNumber);
+    $result = null;
+    if(!empty($nhaMang)){
+        $result = reset(taxonomy_get_term_by_name($nhaMang,'provider'));
+    }
+    return $result;
+}
 ?>

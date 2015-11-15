@@ -112,12 +112,15 @@ function simcore_node_presave($node){
     if($node->type == 'sim' && $node->is_new == TRUE){
         if(empty($node->field_lo_i_sim[$node->language][0]['tid'])){
            $result =  _get_kind_of_phone_number($node->title);
-
+           $nhaMang = getNhaMangTermId($node->title);
             if(!empty($dai_ly)){
                 $node->field_dai_ly[$node->language][0]['tid'] = $dai_ly;
             }
             if(!empty($result)){
                 $node->field_lo_i_sim[$node->language][0]['tid'] = $result;
+            }
+            if(!empty($nhaMang)){
+                $node->field_nh_m_ng[$node->language][0]['tid'] = $nhaMang->tid;
             }
         }
         $gia = variable_get('gia');
