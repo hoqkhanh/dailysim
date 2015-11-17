@@ -410,6 +410,7 @@ function giaThucSim($giaSauChietKhau,$phiCatSim){
 }
 
 function checkNhaMang($phoneNumber){
+    $phoneNumber = str_replace('.','',$phoneNumber);
     if(preg_match('/^(091|094|0123|0124|0125|0127|0129)/',$phoneNumber)){
         return "vinaphone";
     }
