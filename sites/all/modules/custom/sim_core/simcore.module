@@ -50,10 +50,10 @@ function search_handle(){
         $query['mang'] = $mang;
     }
     if(!empty($gia['min'])){
-        $query['gia[min]'] = array("min" => $gia['min']);
+        $query['field_gia_1'] = $gia['min'];
     }
     if(!empty($gia['max'])){
-        $query['gia[max]'] = array("min" => $gia['max']);
+        $query['field_gia'] = $gia['max'];
     }
 
    return $query;
