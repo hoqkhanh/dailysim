@@ -40,7 +40,8 @@
                             ?>
                         </div>
                         <?php
-                            $name = 'search_sim';
+//                            $name = 'search_sim';
+                            $name = 'search_sim_api';
                             $display = 'page';
                             $query = search_handle();
                             $alter = array('exposed' =>$query);
@@ -52,9 +53,7 @@
 
                             if(isset($alter['exposed'])){
                                 foreach($alter['exposed'] as $key => $valor){
-
                                     $view->exposed_input[$key] = $valor;
-
                                 }
                             }
 
@@ -65,7 +64,7 @@
                             $nid_data = array();
                             if(!empty($view->result)){
                                foreach($view->result as $node){
-                                   $nid_data[] = $node->nid;
+                                   $nid_data[] = $node->entity;
                                }
                             }
                         $nid_s = implode(',',$nid_data)
