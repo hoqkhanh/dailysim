@@ -489,3 +489,6 @@ input.webform-submit{
 .view-empty p{
     color: #004892;
 }
+#views-exposed-form-search-sim-api-default .views-exposed-form{
+    display: none;
+}

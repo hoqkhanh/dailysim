@@ -40,15 +40,24 @@
                             ?>
                         </div>
                         <?php
-//                            $name = 'search_sim';
+
+                            /*
+                             * Pager handle
+                             */
+
                             $name = 'search_sim_api';
+                            $offset =0;
+                            if(isset($_get['page']) && !empty($_get['page'])){
+                                $offset= $_get['page'];
+                            }
                             $display = 'page';
                             $query = search_handle();
                             $alter = array('exposed' =>$query);
                             $view = views_get_view($name);
+                            $view->set_current_page($offset);
                             $view->init_display($display);
                             $view->preview=TRUE;
-                            $view->is_cacheable = FALSE;
+                            $view->is_cacheable = TRUE;
 
 
                             if(isset($alter['exposed'])){
@@ -57,21 +66,25 @@
                                 }
                             }
 
+
                             $view->pre_execute();
                             $output = $view->display_handler->preview();
+                            print $view->render('block');
                             $view->post_execute();
 
-                            $nid_data = array();
-                            if(!empty($view->result)){
-                               foreach($view->result as $node){
-                                   $nid_data[] = $node->entity;
-                               }
-                            }
-                        $nid_s = implode(',',$nid_data)
-                        ?>
-                        <?php
-                        print views_embed_view('search_sim', 'block',$nid_s );
-                        ?>
+
+//                            $nid_data = array();
+//                            if(!empty($view->result)){
+//                               foreach($view->result as $node){
+//                                   $nid_data[] = $node->entity;
+//                               }
+//                            }
+//                        kpr($nid_data);
+//                        $nid_s = implode(',',$nid_data)
+//                        ?>
+<!--                        --><?php
+//                        print views_embed_view('search_sim', 'block',$nid_s );
+//                        ?>
                     </div>
                 </div>
                 <?php if ($page['right']): ?>
