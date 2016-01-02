@@ -44,14 +44,17 @@
                             /*
                              * Pager handle
                              */
-
                             $name = 'search_sim_api';
+                            $query = search_handle();
+//                            if(isset($query['so_start']) and isset($query['so_end'])){
+//                                $name = 'search_sim';
+//                            }
                             $offset =0;
                             if(isset($_get['page']) && !empty($_get['page'])){
                                 $offset= $_get['page'];
                             }
                             $display = 'page';
-                            $query = search_handle();
+
                             $alter = array('exposed' =>$query);
                             $view = views_get_view($name);
                             $view->set_current_page($offset);
