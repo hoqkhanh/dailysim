@@ -349,6 +349,15 @@ function formatText($text){
     return $textAfterFormat;
 }
 
+function isZeroFirst($text){
+    $firstCharacter = substr($text, 0, 1);
+    if($firstCharacter != '0'){
+        return '0'.$text;
+    }
+    return $text;
+}
+
+
 function congNoTypeCalculation($data, $chietKhau){
     $tongCongNo = 0;
     foreach($data as $sim){

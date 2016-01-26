@@ -215,6 +215,7 @@ function simcore_feeds_presave(FeedsSource $source, $entity, $item){
     if($entity->feeds_item->entity_type == 'node'){
         $item['gia'] = convertTextToNumber($item['gia']);
         $item['so'] = formatText($item['so']);
+        $item['so'] = isZeroFirst($item['so']);
         variable_set('gia', $item['gia']);
         variable_set('so', $item['so']);
     }
